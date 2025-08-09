@@ -1,4 +1,4 @@
-class WhatsAppClone {
+class WebChat {
     constructor() {
         this.currentChat = null;
         this.conversations = [];
@@ -15,13 +15,13 @@ class WhatsAppClone {
     }
 
     initSocket() {
-        // Initialize Socket.IO connection
+
         this.socket = io();
         
-        // Handle connection events
+
         this.socket.on('connect', () => {
             console.log('🔌 Connected to server');
-            // Join conversations when connected
+
             if (this.conversations.length > 0) {
                 const waIds = this.conversations.map(conv => conv.waId);
                 this.socket.emit('join-conversations', waIds);
@@ -32,19 +32,19 @@ class WhatsAppClone {
             console.log('🔌 Disconnected from server');
         });
         
-        // Handle real-time message updates
+
         this.socket.on('new-message', (data) => {
             console.log('📨 New message received:', data);
             this.handleNewMessage(data);
         });
         
-        // Handle conversation updates
+
         this.socket.on('conversations-updated', () => {
             console.log('📋 Conversations updated');
             this.loadConversations();
         });
         
-        // Handle message read status updates
+
         this.socket.on('messages-read', (data) => {
             console.log('👁️ Messages marked as read:', data);
             if (this.currentChatWaId === data.waId) {
@@ -54,27 +54,27 @@ class WhatsAppClone {
      }
 
      handleNewMessage(data) {
-         // Update current chat if the message is for the active conversation
+ 
          if (this.currentChatWaId === data.waId) {
              this.loadMessages(data.waId);
          }
          
-         // Always update conversations list to reflect new message counts
+ 
          this.loadConversations();
          
-         // Show notification for new messages (optional)
+ 
          if (data.message && data.message.direction === 'incoming' && this.currentChatWaId !== data.waId) {
              this.showNotification(`New message from ${data.message.userName || data.waId}`);
          }
      }
 
      showNotification(message) {
-         // Simple notification - you can enhance this with proper notifications
+ 
          console.log('🔔 Notification:', message);
          
-         // Optional: Show browser notification if permission granted
+ 
          if ('Notification' in window && Notification.permission === 'granted') {
-             new Notification('WhatsApp Web Clone', {
+             new Notification('WebChat', {
                  body: message,
                  icon: '/favicon.ico'
              });
@@ -82,7 +82,7 @@ class WhatsAppClone {
      }
 
      bindEvents() {
-        // Send message on Enter key or button click
+
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
         
@@ -97,13 +97,13 @@ class WhatsAppClone {
             this.sendMessage();
         });
 
-        // Search functionality
+
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             this.filterConversations(e.target.value);
         });
 
-        // Auto-refresh methods removed - using real-time Socket.IO updates instead
+
     }
 
     async loadConversations() {
@@ -114,7 +114,7 @@ class WhatsAppClone {
             this.conversations = await response.json();
             this.renderConversations();
             
-            // Join all conversation rooms for real-time updates
+
             if (this.socket && this.socket.connected) {
                 const waIds = this.conversations.map(conv => conv.waId);
                 this.socket.emit('join-conversations', waIds);
@@ -181,29 +181,29 @@ class WhatsAppClone {
 
     async selectChat(waId) {
         try {
-            // Leave previous conversation room
+
             if (this.currentChatWaId && this.socket) {
                 this.socket.emit('leave-conversation', this.currentChatWaId);
             }
             
-            // Update active chat in sidebar
+
             document.querySelectorAll('.chat-item').forEach(item => {
                 item.classList.remove('active');
             });
             document.querySelector(`[data-wa-id="${waId}"]`).classList.add('active');
 
-            // Show chat interface
+
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('chatInterface').style.display = 'flex';
 
             this.currentChatWaId = waId;
             
-            // Join new conversation room
+
             if (this.socket) {
                 this.socket.emit('join-conversation', waId);
             }
             
-            // Load chat info and messages
+
             await Promise.all([
                 this.loadChatInfo(waId),
                 this.loadMessages(waId, true),
@@ -289,7 +289,7 @@ class WhatsAppClone {
         
         if (!messageText || !this.currentChat) return;
 
-        // Disable send button
+        
         const sendBtn = document.getElementById('sendBtn');
         sendBtn.disabled = true;
         messageInput.disabled = true;
@@ -305,20 +305,20 @@ class WhatsAppClone {
 
             if (!response.ok) throw new Error('Failed to send message');
             
-            // Clear input
+
             messageInput.value = '';
             
-            // Reload messages to show the new message
+
             await this.loadMessages(this.currentChat, false);
             
-            // Reload conversations to update last message
+
             await this.loadConversations();
             
         } catch (error) {
             console.error('Error sending message:', error);
             this.showError('Failed to send message');
         } finally {
-            // Re-enable send button
+
             sendBtn.disabled = false;
             messageInput.disabled = false;
             messageInput.focus();
@@ -331,7 +331,7 @@ class WhatsAppClone {
                 method: 'PUT'
             });
             
-            // Update unread count in sidebar
+
             const chatItem = document.querySelector(`[data-wa-id="${waId}"]`);
             const unreadBadge = chatItem.querySelector('.unread-count');
             if (unreadBadge) {
@@ -342,7 +342,7 @@ class WhatsAppClone {
         }
     }
 
-    // Utility functions
+
     getInitials(name) {
         return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
     }
@@ -393,10 +393,10 @@ class WhatsAppClone {
     }
 
     showError(message) {
-        // Simple error display - you can enhance this
+
         console.error(message);
         
-        // Show a temporary error message
+
         const errorDiv = document.createElement('div');
         errorDiv.style.cssText = `
             position: fixed;
@@ -418,8 +418,5 @@ class WhatsAppClone {
     }
 }
 
-// Initialize the app
-const app = new WhatsAppClone();
-
-// Make app globally available for onclick handlers
+const app = new WebChat();
 window.app = app;
