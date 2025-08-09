@@ -1,7 +1,7 @@
 {
-  "name": "whatsapp-web-clone",
+  "name": "webchat",
   "version": "1.0.0",
-  "description": "WhatsApp Web-like interface with MongoDB backend",
+  "description": "A modern real-time chat interface with Socket.IO",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
