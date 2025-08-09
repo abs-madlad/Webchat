@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Helper function to emit real-time updates
+
 function emitMessageUpdate(waId, message, type = 'new-message') {
   io.to(`conversation-${waId}`).emit(type, {
     waId,
@@ -191,7 +191,7 @@ app.post('/api/conversations/:waId/messages', async (req, res) => {
 
     await newMessage.save();
 
-    // Emit real-time update for new message
+
     const messageData = {
       messageId: newMessage.messageId,
       messageBody: newMessage.messageBody,
@@ -225,7 +225,7 @@ app.put('/api/conversations/:waId/mark-read', async (req, res) => {
       { status: 'read', statusUpdatedAt: new Date() }
     );
 
-    // Emit real-time status update if messages were updated
+
     if (result.modifiedCount > 0) {
       io.to(`conversation-${waId}`).emit('messages-read', {
         waId,
@@ -254,6 +254,6 @@ app.get('/', (req, res) => {
 // Start server
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📱 WhatsApp Web Clone with Socket.IO is ready!`);
+  console.log(`📱 WebChat with Socket.IO is ready!`);
   console.log(`⚡ Real-time messaging enabled`);
 });
