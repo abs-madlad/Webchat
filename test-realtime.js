@@ -3,20 +3,20 @@ const io = require('socket.io-client');
 // Connect to the server
 const socket = io('http://localhost:3000');
 
-console.log('🔌 Connecting to WhatsApp Web Clone server...');
+console.log('🔌 Connecting to WebChat server...');
 
 socket.on('connect', () => {
   console.log('✅ Connected to server!');
   console.log('🎯 Socket ID:', socket.id);
   
-  // Simulate joining a conversation
+
   socket.emit('join-conversation', '1234567890');
   
-  // Simulate sending a message after 3 seconds
+
   setTimeout(() => {
     console.log('📤 Simulating incoming message...');
     
-    // This would normally be triggered by the server when a new message arrives
+
     socket.emit('new-message', {
       waId: '1234567890',
       message: {
@@ -31,7 +31,7 @@ socket.on('connect', () => {
     });
   }, 3000);
   
-  // Listen for real-time events
+
   socket.on('new-message', (data) => {
     console.log('📨 Received new message event:', data);
   });
@@ -53,7 +53,7 @@ socket.on('connect_error', (error) => {
   console.error('❌ Connection error:', error);
 });
 
-// Keep the script running for 10 seconds
+
 setTimeout(() => {
   console.log('🏁 Test completed. Disconnecting...');
   socket.disconnect();
