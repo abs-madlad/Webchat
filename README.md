@@ -2,6 +2,8 @@
 
 A modern, responsive chat interface built with Node.js, Express, MongoDB, and Socket.IO for real-time messaging.
 
+![Image Alt](https://github.com/abs-madlad/Webchat/blob/59b963e92ce659853cff1617c83777222b2cc973/image.png)
+
 ## Features
 
 - 📱 Modern chat interface
