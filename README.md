@@ -1,16 +1,16 @@
-# WhatsApp Web Clone
+# WebChat
 
-A WhatsApp Web-like chat interface that displays real-time WhatsApp conversations using webhook data. Built with Node.js, Express, MongoDB, and vanilla JavaScript.
+A modern, responsive chat interface built with Node.js, Express, MongoDB, and Socket.IO for real-time messaging.
 
 ## Features
 
-- 📱 WhatsApp Web-like responsive interface
+- 📱 Modern chat interface
 - 💬 Real-time chat conversations
 - 📊 Message status indicators (sent, delivered, read)
 - 🔍 Search conversations
 - 📝 Send new messages (demo mode - saves to database only)
 - 📱 Mobile-friendly responsive design
-- 🌙 Dark theme matching WhatsApp Web
+- 🌙 Dark theme interface
 - ⚡ **Real-time messaging with Socket.IO**
 - 🔔 **Live message updates without refresh**
 
@@ -109,7 +109,7 @@ The application uses a single collection `processed_messages` with the following
 {
   messageId: String,        // Unique message identifier
   metaMsgId: String,        // Meta message ID for status updates
-  waId: String,             // WhatsApp ID (phone number)
+  waId: String,             // User ID (phone number)
   userName: String,         // User's display name
   messageType: String,      // 'text', 'image', 'document', etc.
   messageBody: String,      // Message content
@@ -117,7 +117,7 @@ The application uses a single collection `processed_messages` with the following
   status: String,           // 'sent', 'delivered', 'read', 'failed'
   timestamp: Date,          // Message timestamp
   statusUpdatedAt: Date,    // Last status update time
-  phoneNumberId: String,    // WhatsApp Business phone number ID
+  phoneNumberId: String,    // Business phone number ID
   displayPhoneNumber: String, // Display phone number
   conversationId: String,   // Conversation ID
   originalPayload: Object   // Original webhook payload
@@ -126,7 +126,7 @@ The application uses a single collection `processed_messages` with the following
 
 ## Sample Webhook Data
 
-The project includes sample JSON files that simulate WhatsApp Business API webhooks:
+The project includes sample JSON files that simulate webhook data:
 
 - `conversation_1_message_1.json` - Incoming message from Ravi Kumar
 - `conversation_1_message_2.json` - Another message
@@ -155,7 +155,7 @@ The application consists of four main components:
    - Sending new messages
    - Updating message statuses
 
-3. **Frontend Interface**: Vanilla JavaScript creates a WhatsApp Web-like interface:
+3. **Frontend Interface**: Vanilla JavaScript creates a modern chat interface:
    - Responsive design that works on desktop and mobile
    - Real-time message display
    - Status indicators
@@ -198,7 +198,7 @@ whatsapp/
 │   └── Message.js           # Message schema
 ├── public/
 │   ├── index.html          # Main HTML file
-│   ├── styles.css          # WhatsApp Web-like styling
+│   ├── styles.css          # Modern chat styling
 │   └── script.js           # Frontend JavaScript
 ├── scripts/
 │   └── processWebhookData.js # Data processing script
