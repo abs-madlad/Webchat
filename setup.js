@@ -16,8 +16,8 @@ function askQuestion(question) {
 }
 
 async function setup() {
-  console.log('🚀 WhatsApp Web Clone Setup');
-  console.log('================================\n');
+  console.log('🚀 WebChat Setup');
+  console.log('=================\n');
   
   console.log('This application requires MongoDB to store chat data.');
   console.log('You have two options:\n');
