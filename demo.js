@@ -241,7 +241,7 @@ app.post('/api/conversations/:waId/messages', (req, res) => {
 
     demoMessages.push(newMessage);
 
-    // Emit real-time update
+
     emitMessageUpdate(waId, {
       messageId: newMessage.messageId,
       messageBody: newMessage.messageBody,
@@ -282,7 +282,7 @@ app.put('/api/conversations/:waId/mark-read', (req, res) => {
       }
     });
 
-    // Emit real-time update for read status
+    
     emitMessageUpdate(waId, null, 'messages-read');
     emitConversationUpdate();
 
@@ -340,7 +340,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Helper function to emit real-time updates
+
 function emitMessageUpdate(waId, message, type = 'new-message') {
   io.to(`conversation-${waId}`).emit(type, {
     waId,
@@ -357,7 +357,7 @@ function emitConversationUpdate() {
 
 // Start server
 server.listen(PORT, () => {
-  console.log('🚀 WhatsApp Web Clone - DEMO MODE');
+  console.log('🚀 WebChat - DEMO MODE');
   console.log('================================');
   console.log(`🌐 Server: http://localhost:${PORT}`);
   console.log('🎭 Using sample data (no database)');
