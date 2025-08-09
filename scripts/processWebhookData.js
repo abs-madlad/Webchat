@@ -15,7 +15,7 @@ class WebhookProcessor {
     console.log('Webhook processor initialized');
   }
 
-  // Process message payload
+
   async processMessage(payload) {
     try {
       const entry = payload.metaData.entry[0];
@@ -41,7 +41,7 @@ class WebhookProcessor {
           originalPayload: payload
         };
 
-        // Check if message already exists
+
         const existingMessage = await Message.findOne({ messageId: message.id });
         if (!existingMessage) {
           const newMessage = new Message(messageData);
@@ -56,7 +56,7 @@ class WebhookProcessor {
     }
   }
 
-  // Process status payload
+
   async processStatus(payload) {
     try {
       const entry = payload.metaData.entry[0];
@@ -66,7 +66,7 @@ class WebhookProcessor {
       if (value.statuses && value.statuses.length > 0) {
         const status = value.statuses[0];
         
-        // Update message status using either id or meta_msg_id
+
         const updateResult = await Message.findOneAndUpdate(
           {
             $or: [
@@ -93,7 +93,7 @@ class WebhookProcessor {
     }
   }
 
-  // Read and process all JSON files
+
   async processAllFiles() {
     const currentDir = process.cwd();
     const files = fs.readdirSync(currentDir).filter(file => file.endsWith('.json'));
@@ -108,7 +108,7 @@ class WebhookProcessor {
 
         console.log(`\n📄 Processing file: ${file}`);
 
-        // Determine if it's a message or status payload
+
         const entry = payload.metaData.entry[0];
         const change = entry.changes[0];
         const value = change.value;
@@ -149,7 +149,7 @@ class WebhookProcessor {
   }
 }
 
-// Run the processor
+
 async function main() {
   const processor = new WebhookProcessor();
   
